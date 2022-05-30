@@ -1,0 +1,8 @@
+@use '../../_lib'as lib;
+
+.main {
+    position: relative;
+    display: block;
+    height: calc(100vh - lib.$header-height);
+    width: 100vw;
+}

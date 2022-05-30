@@ -1,0 +1,79 @@
+@use "../../../../_lib"as lib;
+
+.section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    align-items: center
+}
+
+.search {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    margin: 1rem 0;
+    width: 100vw;
+    justify-content: center;
+
+    .search__input {
+        padding: .2vw;
+        height: 2vw;
+        width: 30vw;
+        font-size: large;
+        margin-right: 2vw;
+    }
+
+    .search__btn {
+        background-color: transparent;
+        padding: 0 .5vw;
+        font-size: large;
+        border: 1px solid lib.$clr-second;
+        border-radius: 5px;
+        transition: .3s;
+        cursor: pointer;
+    }
+
+    .search__btn:hover {
+        color: white;
+        background-color: lib.$clr-second;
+        border: 1px solid transparent;
+    }
+}
+
+.filter {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    margin: 1rem 0;
+    width: 90vw;
+    align-items: center;
+    justify-items: center;
+    box-shadow: 0 3px 4px -1px lib.$clr-grey-shadow;
+
+    .filter__title {
+        grid-column: 1 / span 4;
+        grid-row: 1;
+        width: 100%;
+        height: 2vw;
+        text-align: center;
+        box-shadow: 0 3px 4px -1px lib.$clr-grey-shadow;
+    }
+
+    label {
+        font-size: small;
+        text-align: left;
+        margin: 1.5rem;
+        grid-row: 2;
+    }
+
+    .input {
+        width: 10vw;
+        padding: .2rem;
+    }
+
+    .input__years {
+        width: 7vw;
+    }
+}

@@ -1,0 +1,21 @@
+@use "../../_lib"as lib;
+
+.header {
+    position: relative;
+    display: flex;
+    background-color: lib.$clr-first;
+    height: lib.$header-height;
+    min-height: 3rem;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+
+    .header__title {
+        position: relative;
+        display: block;
+        text-transform: uppercase;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        text-align: center;
+        width: 30vw;
+    }
+}

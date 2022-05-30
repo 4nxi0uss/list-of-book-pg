@@ -1,0 +1,56 @@
+@use "../../../../../_lib"as lib;
+
+table {
+    position: relative;
+    width: 90vw;
+    left: 50%;
+    transform: translateX(-50%);
+    border-collapse: collapse;
+}
+
+table:nth-last-child(1) {
+    box-shadow: 0px 4px 0px 0 lib.$clr-second;
+}
+
+thead {
+    text-align: center;
+    text-transform: uppercase;
+    background-color: lib.$clr-second;
+}
+
+thead th {
+
+    padding: 1rem;
+}
+
+tbody {
+    text-align: center;
+}
+
+tbody td {
+    padding: .7rem;
+}
+
+tbody td button {
+    padding: .3vw 1vw;
+    border: 1px solid transparent;
+    background-color: lib.$clr-btn-read-bg;
+    color: lib.$clr-btn-read-font;
+    font-size: medium;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+}
+
+tbody td button:hover {
+    background-color: lib.$clr-second;
+    color: black;
+}
+
+tbody tr {
+    box-shadow: 0 1.3px 1px lib.$clr-grey-shadow;
+}
+
+tbody tr:nth-child(even) {
+    background-color: rgb(235, 235, 235);
+}
