@@ -47,6 +47,40 @@ tbody td button:hover {
     color: black;
 }
 
+.img {
+    position: relative;
+    width: lib.$icon-width;
+    cursor: pointer;
+    fill: gray;
+}
+
+.img__up {
+    margin-right: .7vw;
+}
+
+.img__up--active {
+    fill: green;
+}
+
+.img__down {
+    transform: rotate(180deg);
+}
+
+.img__down--active {
+    fill: red;
+}
+
+.star {
+    cursor: pointer;
+    width: lib.$icon-width;
+    height: lib.$icon-width;
+    fill: gray;
+}
+
+.star--active {
+    fill: rgb(255, 217, 0);
+}
+
 tbody tr {
     box-shadow: 0 1.3px 1px lib.$clr-grey-shadow;
 }
