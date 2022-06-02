@@ -3,7 +3,39 @@ import './List.scss'
 
 import { ReactComponent as Thumb } from '../../../../../img/thumbsUp.svg'
 import { ReactComponent as Star } from '../../../../../img/star.svg'
+import { useGetAuthorByNameQuery } from '../../../../../Redux/Services/Book';
+
 const List = () => {
+
+    const { data, error, isLoading }: any = useGetAuthorByNameQuery("")
+
+    const readLink = (site: any) => {
+
+        return site.resources.map((el: any) => {
+            if (el.uri.includes(".htm")) {
+                return <a key={el.id} href={el.uri} className='button' target="_blank " rel='noreferrar'>Read</a>
+            }
+        }
+        );
+    }
+
+    const handleClickIconUp = (e: any) => {
+        console.log(e.nativeEvent.path[1])
+        console.log(e.nativeEvent.path[0])
+    }
+
+    const tableRender = () => !isLoading && data?.results?.map((el: any) => {
+        return (
+            <tr key={el.id}>
+                <td>{el.id}</td>
+                <td>{el.title}</td>
+                <td>{el.agents[0].person}</td>
+                <td>{readLink(el)}</td>
+                <td><Thumb className='img img__up' onClick={handleClickIconUp} /><Thumb className='img img__down' /></td>
+                <td><Star className='star' /></td>
+            </tr>
+        )
+    })
 
     return (
         <table>
@@ -18,70 +50,7 @@ const List = () => {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Title1</td>
-                    <td>Author1</td>
-                    <td><button>Read</button></td>
-                    <td><Thumb className='img img__up img__up--active' /><Thumb className='img img__down img__down--active' /></td>
-                    <td><Star className='star  ' /></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Title2</td>
-                    <td>Author3</td>
-                    <td><button>Read</button></td>
-                    <td><Thumb className='img img__up img__up--active' /><Thumb className='img img__down img__down--active' /></td>
-                    <td><Star className='star  ' /></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Title1</td>
-                    <td>Author1</td>
-                    <td><button>Read</button></td>
-                    <td><Thumb className='img img__up img__up--active' /><Thumb className='img img__down img__down--active' /></td>
-                    <td><Star className='star  ' /></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Title2</td>
-                    <td>Author3</td>
-                    <td><button>Read</button></td>
-                    <td><Thumb className='img img__up img__up--active' /><Thumb className='img img__down img__down--active' /></td>
-                    <td><Star className='star  ' /></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Title1</td>
-                    <td>Author1</td>
-                    <td><button>Read</button></td>
-                    <td><Thumb className='img img__up img__up--active' /><Thumb className='img img__down img__down--active' /></td>
-                    <td><Star className='star  ' /></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Title2</td>
-                    <td>Author3</td>
-                    <td><button>Read</button></td>
-                    <td><Thumb className='img img__up img__up--active' /><Thumb className='img img__down img__down--active' /></td>
-                    <td><Star className='star  ' /></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Title1</td>
-                    <td>Author1</td>
-                    <td><button>Read</button></td>
-                    <td><Thumb className='img img__up img__up--active' /><Thumb className='img img__down img__down--active' /></td>
-                    <td><Star className='star  ' /></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Title2</td>
-                    <td>Author3</td>
-                    <td><button>Read</button></td>
-                    <td><Thumb className='img img__up img__up--active' /><Thumb className='img img__down img__down--active' /></td>
-                    <td><Star className='star  ' /></td>
-                </tr>
+                {tableRender()}
             </tbody>
         </table>
     );

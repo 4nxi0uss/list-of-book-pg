@@ -31,7 +31,7 @@ tbody td {
     padding: .7rem;
 }
 
-tbody td button {
+tbody td .button {
     padding: .3vw 1vw;
     border: 1px solid transparent;
     background-color: lib.$clr-btn-read-bg;
@@ -40,9 +40,10 @@ tbody td button {
     font-weight: 600;
     cursor: pointer;
     transition: .3s;
+    text-decoration: none;
 }
 
-tbody td button:hover {
+tbody td .button:hover {
     background-color: lib.$clr-second;
     color: black;
 }
@@ -52,10 +53,12 @@ tbody td button:hover {
     width: lib.$icon-width;
     cursor: pointer;
     fill: gray;
+    // z-index: -1;
 }
 
 .img__up {
     margin-right: .7vw;
+
 }
 
 .img__up--active {
