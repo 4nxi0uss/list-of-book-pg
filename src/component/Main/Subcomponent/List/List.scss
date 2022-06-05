@@ -1,4 +1,4 @@
-@use "../../../../../_lib"as lib;
+@use "../../../../_lib"as lib;
 
 table {
     position: relative;
@@ -41,6 +41,7 @@ tbody td .button {
     cursor: pointer;
     transition: .3s;
     text-decoration: none;
+    margin-left: .5vw;
 }
 
 tbody td .button:hover {
@@ -53,24 +54,10 @@ tbody td .button:hover {
     width: lib.$icon-width;
     cursor: pointer;
     fill: gray;
-    // z-index: -1;
 }
 
 .img__up {
     margin-right: .7vw;
-
-}
-
-.img__up--active {
-    fill: green;
-}
-
-.img__down {
-    transform: rotate(180deg);
-}
-
-.img__down--active {
-    fill: red;
 }
 
 .star {
@@ -90,4 +77,40 @@ tbody tr {
 
 tbody tr:nth-child(even) {
     background-color: rgb(235, 235, 235);
+}
+
+.div-pagination {
+    position: relative;
+    display: flex;
+    justify-content: center
+}
+
+.div-pagination button {
+    font-size: large;
+    background-color: transparent;
+    padding: .3vw .7vw;
+    margin: .5vw;
+    border: 1px solid lib.$clr-second;
+    border-radius: 5px;
+    transition: .3s;
+}
+
+button:hover {
+    color: white;
+    background-color: lib.$clr-second;
+}
+
+.waiter {
+    width: 5vw;
+    height: 5vw;
+
+
+}
+
+.waiter>td>div {
+    height: 5vw;
+    width: 5vw;
+    content: "";
+    border: 15px solid blue;
+    border-radius: 100%;
 }

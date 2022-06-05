@@ -1,22 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { setupListeners } from '@reduxjs/toolkit/query';
-
-import { gutenbergProjectApi } from '../Services/Book';
-
+import BookSlice from '../Slice/BookSlice';
+import LangOptionSlice from '../Slice/LangOptionSlice';
 
 export const store = configureStore({
   reducer: {
-
-    [gutenbergProjectApi.reducerPath]: gutenbergProjectApi.reducer,
+    getBook: BookSlice,
+    getLangOption: LangOptionSlice,
   },
-
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(gutenbergProjectApi.middleware),
 })
 
-setupListeners(store.dispatch)
-
 // Infer the `RootState` and `AppDispatch` types from the store itself
-// export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof store.getState>
 
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-// export type AppDispatch = typeof store.dispatch
+export type AppDispatch = typeof store.dispatch

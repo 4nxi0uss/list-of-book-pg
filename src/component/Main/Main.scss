@@ -4,5 +4,6 @@
     position: relative;
     display: block;
     height: calc(100vh - lib.$header-height);
-    width: 100vw;
+    width: 100%;
+    margin-bottom: 5vw;
 }
