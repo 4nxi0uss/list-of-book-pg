@@ -12,6 +12,7 @@ export interface OptionDataType {
 export interface BookDataType {
   error: string,
   bookStatus: String,
+  pageNumber: number,
   data: {
     count: number,
     next: string,

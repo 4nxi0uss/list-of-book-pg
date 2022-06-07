@@ -5,6 +5,7 @@ import { BookDataType, FAILED_STATUS, IDLE_STATUS, LOADING_STATUS, SUCCESS_STATU
 const initialState: BookDataType = {
   error: "err",
   bookStatus: IDLE_STATUS,
+  pageNumber: 1,
   data: {
     count: 0,
     next: "",
@@ -49,7 +50,17 @@ export const getBookData = createAsyncThunk("books/getBook", async (query: strin
 export const bookDataSlice = createSlice({
   name: 'books',
   initialState,
-  reducers: {},
+  reducers: {
+    incrementPageNumber: (state) => {
+      state.pageNumber += 1
+    },
+    decrementPageNumber: (state) => {
+      state.pageNumber -= 1
+    },
+    setPageNumberByAmount: (state, action: PayloadAction<number>) => {
+      state.pageNumber = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getBookData.pending, (state) => {
       state.bookStatus = LOADING_STATUS
@@ -66,5 +77,6 @@ export const bookDataSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
+export const { incrementPageNumber, decrementPageNumber, setPageNumberByAmount} = bookDataSlice.actions
 
 export default bookDataSlice.reducer

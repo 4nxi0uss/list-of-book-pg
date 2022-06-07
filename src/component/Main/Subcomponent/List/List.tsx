@@ -7,21 +7,20 @@ import thumbDown from '../../../../img/thumb-down.png'
 import thumbUpActive from '../../../../img/thumb-up-active.png'
 import thumbDownActive from '../../../../img/thumb-down-active.png'
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../Redux/Hooks/ReduxHooks';
-import { getBookData } from '../../../../Redux/Slice/BookSlice';
+import { decrementPageNumber, getBookData, incrementPageNumber, setPageNumberByAmount } from '../../../../Redux/Slice/BookSlice';
 import { SUCCESS_STATUS } from '../../../../Redux/Types/ReduxTypes';
 
 const List = () => {
-
-    const [pageNumber, setPageNumber] = useState<number>(1)
-
-    const { error, bookStatus: isLoading, data } = useAppSelector((state) => state.getBook)
+    const { error, bookStatus: isLoading, data, pageNumber } = useAppSelector((state) => state.getBook)
 
     const dispach = useAppDispatch();
 
+    // console.log(data)
+
     useEffect(() => {
-        dispach(getBookData(""))
+        dispach(getBookData(``))
     }, [])
 
     const readLink = (site: any) => site.resources.map((el: any) => (el.uri.includes(".htm")) && (<a key={el.id} href={el.uri} className='button' target="_blank " rel='noreferrar'>Read</a>));
@@ -58,7 +57,12 @@ const List = () => {
     }
 
     const handleUp = (e: any, id: number) => {
-        if (Boolean(thumbUpArr.find((upEl) => upEl === id))) {
+        console.log(Boolean(thumbUpArr.find((upEl) => upEl === id)))
+        console.log(Boolean(thumbDownArr.find((downEl) => downEl === id)))
+        console.log(" --- ")
+
+        if (Boolean(thumbUpArr.find((upEl) => upEl === id)) /*&& !Boolean(thumbDownArr.find((downEl) => downEl === id))*/) {
+
             e.target.src = thumbUp;
             const lastInd = thumbUpArr.findIndex((s) => s === id);
             thumbUpArr.splice(lastInd, 1);
@@ -67,8 +71,13 @@ const List = () => {
 
             // console.log(e)
             window.localStorage.setItem("thumbUP", JSON.stringify(thumbUpArr));
-        } else {
+        } else /*if (Boolean(thumbUpArr.find((upEl) => upEl === id)) && Boolean(thumbDownArr.find((downEl) => downEl === id)))*/ {
+
             e.target.src = thumbUpActive;
+            thumbDownArr.filter((downEL) => { (downEL === id) && thumbDownArr.splice(thumbDownArr.indexOf(id), 1) })
+
+            console.log(thumbDownArr.splice(thumbDownArr.indexOf(id), 1))
+            console.log(thumbDownArr)
             thumbUpArr = [...thumbUpArr, id];
 
             // console.log(e)
@@ -78,7 +87,7 @@ const List = () => {
 
     const handleDown = (e: any, id: number) => {
         if (Boolean(thumbDownArr.find((downEl) => downEl === id))) {
-            // console.log(e)
+            console.log(e)
             e.target.src = thumbDown;
 
             const lastInd = thumbDownArr.findIndex((s) => s === id);
@@ -97,30 +106,33 @@ const List = () => {
     }
 
     const handleNextSite = () => {
-        setPageNumber(pageNumber + 1);
-        dispach(getBookData(`?page=${pageNumber + 1}`));
+        dispach(incrementPageNumber())
+        const ser = data.next.slice(data.next.indexOf('?'), data.next.length)
+        console.log(ser)
+        console.log(ser.slice(ser.lastIndexOf("=") + 1, ser.length))
+        dispach(getBookData(`${data.next.slice(data.next.indexOf('?'), data.next.length) ?? " "}`));
     }
 
     const handlePrevSite = () => {
         if (pageNumber === 1) {
-            setPageNumber(1);
+            dispach(setPageNumberByAmount(1))
         } else {
-            dispach(getBookData(`?page=${pageNumber}`));
-            setPageNumber(pageNumber - 1);
+            dispach(getBookData(`${data.previous.slice(data.previous.indexOf('?'), data.previous.length)}`));
+            dispach(decrementPageNumber())
         }
     }
+    const numberOfSites = Math.ceil(data.count / 10)
 
     const tableRender = () => (isLoading === SUCCESS_STATUS) && data?.results?.map((el: any) => {
         return (
             <tr key={el.id}>
-                {/* <td>{el.id}</td> */}
                 <td>{el.title}</td>
                 <td>{el?.agents[0]?.person}</td>
                 <td>{readLink(el)}</td>
-                <td>
+                {/* <td>
                     <img src={Boolean(thumbUpArr.find((upEl) => upEl === el.id)) ? thumbUpActive : thumbUp} className='img img__up' alt='thumb up' onClick={(e) => { handleUp(e, el.id) }} />
                     <img src={Boolean(thumbDownArr.find((downEl) => downEl === el.id)) ? thumbDownActive : thumbDown} className='img img__down' alt='thumb down' onClick={(e) => { handleDown(e, el.id) }} />
-                </td>
+                </td> */}
                 <td>
                     <img src={Boolean(favArr.find((favEl) => favEl === el.id)) ? starActive : star} alt='empty star' className='star' onClick={(e) => { handleFavBook(e, el.id) }} />
                 </td>
@@ -129,21 +141,33 @@ const List = () => {
     })
 
     const handleSiteInput = (e: any) => {
-        Number(e.target.value) <= 1 ? setPageNumber(1) : setPageNumber(Number(e.target.value))
+        if (!(Number(e.target.value) <= 1) && e.target.value <= (numberOfSites)) {
+            dispach(setPageNumberByAmount(Number(e.target.value)))
+        } else if (e.target.value >= (numberOfSites)) {
+            dispach(setPageNumberByAmount(numberOfSites))
+        } else {
+            dispach(setPageNumberByAmount(1))
+        }
     }
 
-    const numberOfSites = Math.ceil(data.count / 10)
-    console.log(numberOfSites)
+    const handleSiteInputOnKeyDown = (e: any) => {
+        if (e.keyCode === 13 && !(Number(e.target.value) <= 1)) {
+            dispach(setPageNumberByAmount(Number(e.target.value)))
+            dispach(getBookData(`?page=${e.target.value}${(data.next.slice(data.next.indexOf("&"), data.next.length - 1).length <= 10 ? "  " : data.next.slice(data.next.indexOf('&'), data.next.length))}`));
+        } else if (e.keyCode === 13) {
+            dispach(setPageNumberByAmount(1))
+        }
+    }
+
     return (
         <>
             <table>
                 <thead >
                     <tr>
-                        {/* <th>Id</th> */}
                         <th>Title</th>
                         <th>Author</th>
                         <th>Read</th>
-                        <th>Opinion</th>
+                        {/* <th>Opinion</th> */}
                         <th>Favourite</th>
                     </tr>
                 </thead>
@@ -152,9 +176,9 @@ const List = () => {
                 </tbody>
             </table>
             <div className='div-pagination'>
-                <button onClick={handlePrevSite}>Prev</button>
-                <input type="number" onChange={handleSiteInput} value={pageNumber} /> <span>/{numberOfSites}</span>
-                <button onClick={handleNextSite}>Next</button>
+                <button onClick={() => { isLoading === SUCCESS_STATUS && handlePrevSite() }}>Prev</button>
+                <input type="number" onKeyDown={handleSiteInputOnKeyDown} onChange={handleSiteInput} value={pageNumber} max={numberOfSites} /> <span>/{numberOfSites}</span>
+                <button onClick={() => { isLoading === SUCCESS_STATUS && !(data.next === null) && handleNextSite() }}>Next</button>
             </div>
         </>
     );
