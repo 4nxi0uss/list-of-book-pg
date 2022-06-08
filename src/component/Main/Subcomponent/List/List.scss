@@ -1,4 +1,4 @@
-@use "../../../../_lib"as lib;
+@use "../../../_lib"as lib;
 
 table {
     position: relative;
@@ -82,7 +82,9 @@ tbody tr:nth-child(even) {
 .div-pagination {
     position: relative;
     display: flex;
-    justify-content: center
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
 }
 
 .div-pagination button {
@@ -95,22 +97,51 @@ tbody tr:nth-child(even) {
     transition: .3s;
 }
 
+.div-pagination__page-input {
+    width: 4rem;
+    height: 2rem;
+    border-radius: 5px;
+    border: 1px solid grey;
+    font-size: medium;
+    text-align: center;
+}
+
+.div-pagination__number-of-page {
+    font-size: large;
+}
+
 button:hover {
     color: white;
     background-color: lib.$clr-second;
 }
 
 .waiter {
-    width: 5vw;
-    height: 5vw;
-
-
+    width: 15vw;
+    height: 15vw;
 }
 
-.waiter>td>div {
+@keyframes spinner {
+    0% {
+        transform: translate3d(-50%, -50%, 0) rotate(0deg);
+    }
+
+    100% {
+        transform: translate3d(-50%, -50%, 0) rotate(360deg);
+    }
+}
+
+.spinner::before {
+    animation: 1.5s linear infinite spinner;
+    animation-play-state: inherit;
+    border: solid 10px #cfd0d1;
+    border-bottom-color: #1c87c9;
+    border-radius: 50%;
+    content: " ";
     height: 5vw;
     width: 5vw;
-    content: "";
-    border: 15px solid blue;
-    border-radius: 100%;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    will-change: transform;
 }

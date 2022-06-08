@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { BookDataType, FAILED_STATUS, IDLE_STATUS, LOADING_STATUS, SUCCESS_STATUS } from '../Types/ReduxTypes'
+import { BookDataType, FAILED_STATUS, IDLE_STATUS, LOADING_STATUS, StatusPageDataType, SUCCESS_STATUS } from '../Types/ReduxTypes'
 
-
-const initialState: BookDataType = {
+const initialState: BookDataType & StatusPageDataType = {
   error: "err",
   bookStatus: IDLE_STATUS,
   pageNumber: 1,
@@ -11,29 +10,19 @@ const initialState: BookDataType = {
     next: "",
     previous: "",
     results: [{
-      agents: [{
-        id: 0,
-        person: "",
-        type: "",
-      }],
-      bookshelves: [""],
-      description: "",
-      downloads: 0,
       id: 0,
       languages: [""],
-      license: "",
       resources: [{
         id: 0,
         uri: "",
         type: "",
       }],
-      subjects: [""],
       title: "",
-      type: ""
     }]
   },
 }
 
+// set a query 
 export const getBookData = createAsyncThunk("books/getBook", async (query: string) => {
 
   try {
@@ -61,11 +50,12 @@ export const bookDataSlice = createSlice({
       state.pageNumber = action.payload
     },
   },
+
   extraReducers: (builder) => {
     builder.addCase(getBookData.pending, (state) => {
       state.bookStatus = LOADING_STATUS
     })
-    builder.addCase(getBookData.fulfilled, (state, action: PayloadAction<any>) => {
+    builder.addCase(getBookData.fulfilled, (state, action: PayloadAction<BookDataType["data"]>) => {
       state.data = action.payload
       state.bookStatus = SUCCESS_STATUS
     })
@@ -77,6 +67,6 @@ export const bookDataSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { incrementPageNumber, decrementPageNumber, setPageNumberByAmount} = bookDataSlice.actions
+export const { incrementPageNumber, decrementPageNumber, setPageNumberByAmount } = bookDataSlice.actions
 
 export default bookDataSlice.reducer

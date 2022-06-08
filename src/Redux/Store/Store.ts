@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
+
 import BookSlice from '../Slice/BookSlice';
 import LangOptionSlice from '../Slice/LangOptionSlice';
 

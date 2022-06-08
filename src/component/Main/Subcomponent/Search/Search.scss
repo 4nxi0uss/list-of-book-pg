@@ -1,4 +1,4 @@
-@use "../../../../_lib"as lib;
+@use "../../../_lib"as lib;
 
 .section {
     position: relative;
@@ -32,12 +32,30 @@
         border-radius: 5px;
         transition: .3s;
         cursor: pointer;
+        margin-right: 1rem;
     }
 
     .search__btn:hover {
         color: white;
         background-color: lib.$clr-second;
         border: 1px solid transparent;
+    }
+
+    .search__btn--submit {
+        color: white;
+        background-color: lib.$clr-second;
+    }
+
+    .search__btn--submit:hover {
+        color: black;
+        background-color: transparent;
+        border: 1px solid lib.$clr-second;
+    }
+
+    .search__btn--clear:hover {
+        color: white;
+        border: 1px solid transparent;
+        background-color: rgba(255, 68, 0, 0.699);
     }
 }
 
@@ -60,7 +78,7 @@
         text-align: center;
         box-shadow: 0 3px 4px -1px lib.$clr-grey-shadow;
     }
-    
+
     label {
         font-size: small;
         text-align: left;
@@ -73,7 +91,59 @@
         padding: .2rem;
     }
 
+    .input__lang {
+        cursor: pointer;
+    }
+
     .input__years {
         width: 7vw;
     }
+
+    .filter-btn-section {
+        position: relative;
+        display: flex;
+        width: 50%;
+        height: 3vw;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    .filter-btn-section__btn {
+        position: relative;
+        margin: 0 .4rem;
+        padding: .5rem;
+        border: 1px solid blue;
+        border-radius: 10%;
+        background-color: transparent;
+        cursor: pointer;
+        transition: .3s;
+    }
+
+    .filter-btn-section__btn--filter {
+        color: white;
+        border: 1px solid transparent;
+        background-color: lib.$clr-second;
+        font-size: large;
+    }
+
+    .filter-btn-section__btn--filter:hover {
+        color: black;
+        background-color: transparent;
+        border: 1px solid lib.$clr-second;
+    }
+
+    .filter-btn-section__btn--clean {
+        color: black;
+        border: 1px solid lib.$clr-second;
+        background-color: transparent;
+        font-size: large;
+    }
+
+    .filter-btn-section__btn--clean:hover {
+        color: white;
+        border: 1px solid transparent;
+        background-color: rgba(255, 68, 0, 0.699);
+    }
+
 }

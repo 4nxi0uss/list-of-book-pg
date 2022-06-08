@@ -4,39 +4,34 @@ export const FAILED_STATUS = "FAILED";
 export const IDLE_STATUS = "IDLE";
 
 export interface OptionDataType {
-  error: string,
-  langOptionStatus: string,
-  data: any
+  error: string;
+  langOptionStatus: string;
+}
+
+export interface StatusPageDataType {
+  error: string;
+  bookStatus: String;
+  pageNumber: number;
 }
 
 export interface BookDataType {
-  error: string,
-  bookStatus: String,
-  pageNumber: number,
   data: {
-    count: number,
-    next: string,
-    previous: string,
-    results: [{
-      agents: [{
-        id: number,
-        person: string,
-        type: string,
-      }],
-      bookshelves: string[],
-      description: string,
-      downloads: number,
-      id: number,
-      languages: string[],
-      license: string,
-      resources: [{
-        id: number,
-        uri: string,
-        type: string,
-      }],
-      subjects: string[],
-      title: string,
-      type: string
-    }]
-  },
+    count: number;
+    next: string;
+    previous: string;
+    results: [
+      {
+        id: number;
+        languages: string[];
+        resources: [
+          {
+            id: number;
+            uri: string;
+            type: string;
+          }
+        ];
+        title: string;
+      }
+    ];
+  };
 }
