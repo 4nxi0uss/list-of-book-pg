@@ -26,6 +26,7 @@
 
     .search__btn {
         background-color: transparent;
+        height: 2.5rem;
         padding: 0 .5vw;
         font-size: large;
         border: 1px solid lib.$clr-second;
@@ -52,7 +53,7 @@
         border: 1px solid lib.$clr-second;
     }
 
-    .search__btn--clear:hover {
+    .search__btn--clean:hover {
         color: white;
         border: 1px solid transparent;
         background-color: rgba(255, 68, 0, 0.699);
@@ -75,6 +76,7 @@
         grid-row: 1;
         width: 100%;
         height: 2vw;
+        font-size: x-large;
         text-align: center;
         box-shadow: 0 3px 4px -1px lib.$clr-grey-shadow;
     }
@@ -113,7 +115,6 @@
         position: relative;
         margin: 0 .4rem;
         padding: .5rem;
-        border: 1px solid blue;
         border-radius: 10%;
         background-color: transparent;
         cursor: pointer;
@@ -146,4 +147,52 @@
         background-color: rgba(255, 68, 0, 0.699);
     }
 
+}
+
+
+@media only screen and (max-width: 768px) {
+
+
+    .search {
+        display: flex;
+        flex-direction: column;
+        margin: 1rem 0;
+        width: 100%;
+        align-items: center;
+
+        .search__input {
+            height: 2rem;
+            width: 80vw;
+            margin-bottom: 5vw;
+        }
+
+        .search__btn {
+            padding: 1vw 2vw;
+            height: 2.5rem;
+        }
+    }
+
+    .filter {
+        display: flex;
+        flex-direction: column;
+        margin: 1rem 0 2rem 0;
+
+        .filter__title {
+            font-size: x-large;
+            height: 10vw;
+        }
+
+        label {
+            font-size: large;
+        }
+
+        .input {
+            width: 30vw;
+        }
+
+        .filter-btn-section {
+            display: flex;
+            height: 15vw;
+        }
+    }
 }

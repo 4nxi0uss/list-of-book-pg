@@ -19,3 +19,10 @@
         width: 30vw;
     }
 }
+
+@media only screen and (max-width: 768px) {
+
+    .header {
+        height: lib.$header-height-mobile;
+    }
+}

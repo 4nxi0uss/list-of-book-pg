@@ -138,14 +138,24 @@ const Search = () => {
         dispach(getBookData(querryText));
     }
 
+    const handleCleanFinter = () => {
+        setLang("every")
+        setBirtgFrom(0)
+        setBirtgTo(0)
+        setDeathFrom(0)
+        setDeathTo(0)
+    }
+
     const optionList = langOptionArr.map((el) => (el !== undefined) && <option key={`${el}`} value={el}>{el}</option>)
 
     return (
         <section className="section">
             <div className="search">
                 <input placeholder="search by title, author..." type="text" className="search__input" onKeyDown={handleSubbmitKey} onChange={handleSearch} value={searchQ} />
-                <button className="search__btn search__btn--submit" onClick={handleSubbmit}>Search</button>
-                <button className=" search__btn search__btn--clear" onClick={handleClear}>Clean</button>
+                <div >
+                    <button className="search__btn search__btn--submit" onClick={handleSubbmit}>Search</button>
+                    <button className=" search__btn search__btn--clean" onClick={handleClear}>Clean</button>
+                </div>
             </div>
             <div className="filter">
                 <p className="filter__title">Filter</p>
@@ -158,7 +168,7 @@ const Search = () => {
 
                 <div className="filter-btn-section">
                     <button onClick={handleFilter} className='filter-btn-section__btn filter-btn-section__btn--filter '>Filter</button>
-                    <button className="filter-btn-section__btn filter-btn-section__btn--clean">Clean</button>
+                    <button className="filter-btn-section__btn filter-btn-section__btn--clean" onClick={handleCleanFinter}>Clean</button>
                 </div>
             </div>
         </section>
