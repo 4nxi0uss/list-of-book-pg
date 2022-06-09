@@ -162,4 +162,16 @@ tbody tr:nth-child(even) {
         padding: 2vw 2vw;
         margin: 1vw 3vw;
     }
+
+    .waiter {
+        width: 20vw;
+        height: 20vw;
+    }
+
+    .spinner::before {
+        height: 10vw;
+        width: 10vw;
+        top: 60%;
+        left: 50%;
+    }
 }
