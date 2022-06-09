@@ -77,73 +77,49 @@ const Search = () => {
     }
 
     const handleBirthFrom = (event: ChangeEvent<HTMLInputElement>) => {
-        if (Number(event.target.value) !== 0 && Number(event.target.value) <= (new Date().getFullYear()) && Number(event.target.value) >= 1) {
-            setBirtgFrom(Number(event.target.value))
-        } else if (Number(event.target.value) >= (new Date().getFullYear())) {
-            setBirtgFrom(new Date().getFullYear() - 1)
-        } else {
-            setBirtgFrom(0)
-        }
+        setBirtgFrom(Number(event.target.value))
     }
 
     const handleBirthTo = (event: ChangeEvent<HTMLInputElement>) => {
-        if (Number(event.target.value) !== 0 && Number(event.target.value) <= (new Date().getFullYear()) && Number(event.target.value) >= birtgFrom) {
-            setBirtgTo(Number(event.target.value))
-        } else if (Number(event.target.value) >= (new Date().getFullYear())) {
-            setBirtgTo(new Date().getFullYear())
-        } else {
-            setBirtgTo(birtgFrom)
-        }
+        setBirtgTo(Number(event.target.value))
     }
 
     const handleDeathFrom = (event: ChangeEvent<HTMLInputElement>) => {
-        if (Number(event.target.value) !== 0 && Number(event.target.value) <= (new Date().getFullYear()) && Number(event.target.value) >= 1) {
-            setDeathFrom(Number(event.target.value))
-        } else if (Number(event.target.value) >= (new Date().getFullYear())) {
-            setDeathFrom(new Date().getFullYear() - 1)
-        } else {
-            setDeathFrom(0)
-        }
+        setDeathFrom(Number(event.target.value))
     }
 
     const handleDeathTo = (event: ChangeEvent<HTMLInputElement>) => {
-        if (Number(event.target.value) > 0 && Number(event.target.value) <= (new Date().getFullYear()) && Number(event.target.value) >= deathFrom) {
-            setDeathTo(Number(event.target.value))
-        } else if (Number(event.target.value) >= (new Date().getFullYear())) {
-            setDeathTo(new Date().getFullYear())
-        } else {
-            setDeathTo(deathFrom)
-        }
+        setDeathTo(Number(event.target.value))
     }
 
     const handleFilter = () => {
         let querryText = "?"
 
         if (lang !== "every") {
-            querryText = querryText + `languages=${lang}&`
+            querryText = querryText + `languages=${lang === "every" ? "" : lang}&`
         }
         if (birtgFrom !== 0) {
-            querryText = querryText + `agent_birth_date_range_min=${birtgFrom}&`
+            querryText = querryText + `agent_birth_date_range_min=${birtgFrom === 0 ? "" : birtgFrom}&`
         }
         if (birtgTo !== 0) {
-            querryText = querryText + `agent_birth_date_range_max=${birtgTo}&`
+            querryText = querryText + `agent_birth_date_range_max=${birtgTo === 0 ? "" : birtgTo}&`
         }
         if (deathFrom !== 0) {
-            querryText = querryText + `agent_death_date_range_min=${deathFrom}&`
+            querryText = querryText + `agent_death_date_range_min=${deathFrom === 0 ? "" : deathFrom}&`
         }
         if (deathTo !== 0) {
-            querryText = querryText + `agent_death_date_range_max=${deathTo}&`
+            querryText = querryText + `agent_death_date_range_max=${deathTo === 0 ? "" : deathTo}&`
         }
-
+        console.log(querryText)
         dispach(getBookData(querryText));
     }
 
     const handleCleanFinter = () => {
-        setLang("every")
-        setBirtgFrom(0)
-        setBirtgTo(0)
-        setDeathFrom(0)
-        setDeathTo(0)
+        setLang("every");
+        setBirtgFrom(0);
+        setBirtgTo(0);
+        setDeathFrom(0);
+        setDeathTo(0);
     }
 
     const optionList = langOptionArr.map((el) => (el !== undefined) && <option key={`${el}`} value={el}>{el}</option>)
@@ -162,12 +138,12 @@ const Search = () => {
 
                 <label >Languages<br /><select className="input input__lang" onChange={handleLang} value={lang} >  <option key="every" value="every" >----</option> {isLoading === SUCCESS_STATUS && !isPending && optionList}</select>   </label>
 
-                <label >Author person birth date range<br /><input type="number" className="input" onChange={handleBirthFrom} value={birtgFrom} min="1" max={new Date().getFullYear() - 1} />-<input type="number" className="input" max={new Date().getFullYear()} onChange={handleBirthTo} value={birtgTo} /></label>
+                <label >Author person birth date range<br /><input placeholder="from..." type="number" className="input" onFocus={(e) => { e.target.value = '' }} onChange={handleBirthFrom} value={birtgFrom} min="1" max={new Date().getFullYear() - 1} />-<input placeholder="to" type="number " className="input" max={new Date().getFullYear()} onFocus={(e) => { e.target.value = '' }} onChange={handleBirthTo} value={birtgTo} /></label>
 
-                <label >Author person death date range<br /><input type="number" className="input" min="1" max={new Date().getFullYear() - 1} onChange={handleDeathFrom} value={deathFrom} />-<input type="number" className="input" max={new Date().getFullYear()} onChange={handleDeathTo} value={deathTo} /></label>
+                <label >Author person death date range<br /><input placeholder="from..." type="number" className="input" min="1" max={new Date().getFullYear() - 1} onFocus={(e) => { e.target.value = '' }} onChange={handleDeathFrom} value={deathFrom} />-<input placeholder="to" type="number" className="input" max={new Date().getFullYear()} onFocus={(e) => { e.target.value = '' }} onChange={handleDeathTo} value={deathTo} /></label>
 
                 <div className="filter-btn-section">
-                    <button onClick={handleFilter} className='filter-btn-section__btn filter-btn-section__btn--filter '>Filter</button>
+                    <button className='filter-btn-section__btn filter-btn-section__btn--filter' onClick={handleFilter}>Filter</button>
                     <button className="filter-btn-section__btn filter-btn-section__btn--clean" onClick={handleCleanFinter}>Clean</button>
                 </div>
             </div>
